@@ -13,7 +13,6 @@ const urlSchema = new mongoose.Schema({ //Defines the schema (blueprint) for eac
         required: true
     },
     visitHistory: [{timestamp: {type: Number}}]
-
 }, 
 {timestamps: true}
 );
