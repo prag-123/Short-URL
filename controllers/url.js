@@ -22,7 +22,9 @@ async function handlegenerateNewURL(req,res){
 // GET handler
 async function handleRedirectURL(req, res) {
     const shortID = req.params.shortID;
-  
+
+    console.log("Requested shortID:", shortID);
+    
     const entry = await URL.findOneAndUpdate(
       { shortId: shortID },
       {
@@ -51,8 +53,16 @@ async function handleRedirectURL(req, res) {
     });
   }
 
+  // server side rendering
+
+  async function handleServerSideRendering(req,res){
+    const allURLs = await URL.find({});
+    return res.render("home", { urls: allURLs });
+  }
+
 module.exports ={
     handlegenerateNewURL,
     handleRedirectURL,
-    handlegetAnalytics
+    handlegetAnalytics,
+    handleServerSideRendering
 };
