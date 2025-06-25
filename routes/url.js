@@ -3,12 +3,12 @@ const {handlegenerateNewURL,handleRedirectURL, handlegetAnalytics,handleServerSi
 const router = express.Router(); //Creates a Router object — a mini app that you can attach routes to.
 
 // POST: create new short URL
-router.post("/", handlegenerateNewURL); //Defines a POST route at path /.
+router.post("/", handlegenerateNewURL); //Defines a POST route at path /. handles POST /url
 
 router.get('/test', handleServerSideRendering);
 // GET: redirect using short ID
-router.get('/:shortID', handleRedirectURL);
+router.get('/:shortID', handleRedirectURL); //handles GET /url/:shortID
 
-router.get('/analytics/:shortID',handlegetAnalytics);
+router.get('/analytics/:shortID',handlegetAnalytics); //analytics
 
 module.exports = router; // Direct assign: You do this when the file exports one main thing.
