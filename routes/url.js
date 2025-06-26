@@ -1,14 +1,23 @@
 const express = require("express");
-const {handlegenerateNewURL,handleRedirectURL, handlegetAnalytics,handleServerSideRendering} = require("../controllers/url");
-const router = express.Router(); //Creates a Router object — a mini app that you can attach routes to.
+const {
+  handlegenerateNewURL,
+  handleRedirectURL,
+  handlegetAnalytics,
+  handleServerSideRendering,
+} = require("../controllers/url");
+
+const router = express.Router();
 
 // POST: create new short URL
-router.post("/", handlegenerateNewURL); //Defines a POST route at path /. handles POST /url
+router.post("/", handlegenerateNewURL); // handles POST /url
 
+// Server-side rendering for testing
 router.get('/test', handleServerSideRendering);
+
+// ⚠️ Define this FIRST to avoid conflict with :shortId
+router.get('/analytics/:shortID', handlegetAnalytics); // handles GET /url/analytics/:shortID
+
 // GET: redirect using short ID
-router.get('/:shortID', handleRedirectURL); //handles GET /url/:shortID
+router.get('/:shortId', handleRedirectURL); // handles GET /url/:shortId
 
-router.get('/analytics/:shortID',handlegetAnalytics); //analytics
-
-module.exports = router; // Direct assign: You do this when the file exports one main thing.
+module.exports = router;
