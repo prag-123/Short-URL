@@ -1,0 +1,99 @@
+Goal of the Project
+Building a URL shortener app (like Bit.ly) where:
+
+Users can sign up / log in
+
+Create short links
+
+Get analytics (how many times a link was clicked)
+
+See everything on EJS pages
+
+Project Setup
+1. Server Entry Point: index.js
+Starts an Express app on PORT 50001
+
+Connects to MongoDB
+
+Sets up middleware:
+
+Parses cookies, JSON, form data
+
+Uses 3 route groups:
+
+/url (shorten & redirect) – protected
+
+/user (signup/login) – public
+
+/ (views) – public with login check
+
+User Flow
+2. User Signup/Login (/user)
+📄 POST /user (Signup)
+Saves new user to DB
+
+📄 POST /user/login (Login)
+Checks email + password
+
+If valid:
+
+Generates a UUID session ID
+
+Stores user in memory (Map)
+
+Sends session ID in cookie uid
+
+Authentication
+3. Middleware
+restrictToLoginUserOnly:
+If user isn’t logged in → redirect to /login
+
+checkAuth:
+Checks if user is logged in, adds user info to req.user if so (used for rendering)
+
+Views (/)
+Handled by staticRouter:
+
+/login → Login page
+
+/signup → Signup page
+
+/ → Home page (after login)
+
+Shows all URLs created by that user
+
+URL Shortening Logic (/url)
+4. handlegenerateNewURL
+Gets the long URL from user
+
+Generates a short ID
+
+Saves it with:
+
+redirectURL
+
+createdBy user
+
+Renders home.ejs with new short link
+
+handleRedirectURL
+When someone visits /url/:shortId
+
+It finds the long URL, adds a click timestamp, and redirects
+
+handlegetAnalytics
+Returns how many times the link was clicked
+
+Data Models
+url.js:
+shortId, redirectURL, visitHistory[], createdBy
+
+users.js:
+name, email, password
+
+EJS Views (in /views)
+signup.ejs: Form for user registration
+
+login.ejs: Form for login
+
+home.ejs: Lists user’s URLs, shows short links, etc.
