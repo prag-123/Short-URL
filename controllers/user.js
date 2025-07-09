@@ -5,6 +5,11 @@ const {setUser}= require("../service/auth");
 async function handleUserSignUp(req, res){
 
     const {name, email, password} = req.body;
+    console.log(name, email, password);
+
+    if (!email || !name || !password) {
+    return res.status(400).send("All fields are required");
+}
 
     await User.create({
         name,
@@ -34,7 +39,7 @@ async function handleUserlogin(req, res){
 
     //Stateless
     const token = setUser(user);
-    res.cookie('token', token);
+    res.cookie('token', token); //sending token in cookie
     return res.redirect('/');
 
 }

@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: false })); // Then: parse form data
 app.use(checkForAuthentication);
 
 // Routes
-app.use("/url",restrictTo(["NORMAL"]), urlRoute); // Protected
+app.use("/url",restrictTo(["NORMAL", "ADMIN"]), urlRoute); // Protected
 app.use("/user", userRoute); // Public
 app.use("/",  staticRoute); // Public
 

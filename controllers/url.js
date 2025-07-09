@@ -52,6 +52,11 @@ async function handleRedirectURL(req, res) {
   async function handlegetAnalytics(req,res){
     const shortId = req.params.shortID;
     const result = await URL.findOne( {shortId} );
+
+    if (!result) {
+    return res.status(404).json({ error: "Short URL not found" });
+    }
+    
     return res.json({
         totalclicks: result.visitHistory.length, analytics: result.visitHistory
     });
